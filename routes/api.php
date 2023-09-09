@@ -34,6 +34,8 @@ Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {
     Route::get('/pages', [DashboardPageController::class, 'index'])->name('dashboard.pages.index');
     Route::get('/pages/{page}', [DashboardPageController::class, 'show'])->name('dashboard.pages.show');
     Route::put('/pages/{page}', [DashboardPageController::class, 'update'])->name('dashboard.pages.update');
+
+    Route::post('/upload', [DashboardPageController::class, 'uploadImage'])->name('dashboard.upload');
 });
 
 Route::get('{page}', [PageController::class, 'show'])->name('pages.show');

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
 use App\Models\Page;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardPageController extends Controller
 {
@@ -72,5 +73,21 @@ class DashboardPageController extends Controller
     public function destroy(Page $page)
     {
         //
+    }
+
+    public function uploadImage(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $originalName = $request->file('image')->getClientOriginalName();
+        $imageName = str_replace(['(', ')', ' '], '', time() . uniqid() . $originalName);
+        $contents = file_get_contents($request->file('image'));
+        Storage::put("public/" . $imageName, $contents);
+
+        $image = Storage::url('public/' . $imageName);
+
+        return response()->json(compact('image'));
     }
 }
