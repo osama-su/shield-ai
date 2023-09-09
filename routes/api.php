@@ -23,3 +23,17 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// admin routes
+Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/me', [AuthController::class, 'me']);
+
+
+    Route::get('pages', [DashboardPageController::class, 'index'])->name('dashboard.pages.index');
+    Route::get('{page}', [DashboardPageController::class, 'show'])->name('dashboard.pages.show');
+    Route::put('{page}', [DashboardPageController::class, 'update'])->name('dashboard.pages.update');
+});
+
+Route::get('{page}', [PageController::class, 'show'])->name('pages.show');
