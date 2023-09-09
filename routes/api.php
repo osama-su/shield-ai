@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\dashboard\PageController as DashboardPageController;
+use App\Http\Controllers\Api\dashboard\DashboardPageController;
 use App\Http\Controllers\Api\website\PageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
