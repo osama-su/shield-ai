@@ -87,8 +87,7 @@ class DashboardPageController extends Controller
         $contents = file_get_contents($request->file('image'));
         Storage::put("public/" . $imageName, $contents);
 
-        $image = Storage::url('public/' . $imageName);
-
+        $image = asset('storage/' . $imageName);
         return response()->json(compact('image'));
     }
 }
