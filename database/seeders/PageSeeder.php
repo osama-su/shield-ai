@@ -11,7 +11,7 @@ class PageSeeder extends Seeder
      */
     public function run(): void
     {
-        if (\App\Models\Page::where('slug', 'home')->exists()) {
+        if (!\App\Models\Page::where('slug', 'home')->exists()) {
             \App\Models\Page::factory()->create([
                 'title' => 'Home',
                 'slug' => 'home',
@@ -39,7 +39,7 @@ class PageSeeder extends Seeder
             ]);
         }
 
-        if (\App\Models\Page::where('slug', 'about')->exists()) {
+        if (!\App\Models\Page::where('slug', 'about')->exists()) {
             \App\Models\Page::factory()->create([
                 'title' => 'Header',
                 'slug' => 'header',
@@ -67,7 +67,7 @@ class PageSeeder extends Seeder
             ]);
         }
 
-        if (\App\Models\Page::where('slug', 'about')->exists()) {
+        if (!\App\Models\Page::where('slug', 'about')->exists()) {
             \App\Models\Page::factory()->create([
                 'title' => 'Footer',
                 'slug' => 'footer',
