@@ -39,5 +39,57 @@ class PageSeeder extends Seeder
                 ],
             ],
         ]);
+
+        \App\Models\Page::factory()->create([
+            'title' => 'Header',
+            'slug' => 'header',
+            'content' => [
+                'hero' => [
+                    'title' => 'Welcome to our website!',
+                    'subtitle' => 'This is a subtitle',
+                    'image' => [
+                        'url' => 'https://source.unsplash.com/random/800x600',
+                        'alt' => 'Random image',
+                    ],
+                    'cta' => [
+                        'label' => 'Learn more',
+                        'url' => '#',
+                    ],
+                    'cta2' => [
+                        'label' => 'Contact us',
+                        'url' => '#',
+                    ],
+                ],
+                'heading' => [
+                    'title' => 'About us',
+                ],
+            ],
+        ]);
+
+        \App\Models\Page::factory()->create([
+            'title' => 'Footer',
+            'slug' => 'footer',
+            'content' => [
+                'hero' => [
+                    'title' => 'Welcome to our website!',
+                    'subtitle' => 'This is a subtitle',
+                    'image' => [
+                        'url' => 'https://source.unsplash.com/random/800x600',
+                        'alt' => 'Random image',
+                    ],
+                    'cta' => [
+                        'label' => 'Learn more',
+                        'url' => '#',
+                    ],
+                    'cta2' => [
+                        'label' => 'Contact us',
+                        'url' => '#',
+                    ],
+                ],
+                'heading' => [
+                    'title' => 'About us',
+                ],
+            ],
+        ]);
     }
 }
