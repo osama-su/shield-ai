@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ContactMessageController;
 use App\Http\Controllers\Api\dashboard\DashboardPageController;
 use App\Http\Controllers\Api\website\PageController;
 use Illuminate\Http\Request;
@@ -36,6 +37,13 @@ Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {
     Route::put('/pages/{page}', [DashboardPageController::class, 'update'])->name('dashboard.pages.update');
 
     Route::post('/upload', [DashboardPageController::class, 'uploadImage'])->name('dashboard.upload');
+
+    Route::get('/contact', [ContactMessageController::class, 'index']);
+    Route::get('/contact/{contactMessage}', [ContactMessageController::class, 'show']);
+    Route::delete('/contact/{contactMessage}', [ContactMessageController::class, 'destroy']);
+
 });
 
 Route::get('{page}', [PageController::class, 'show'])->name('pages.show');
+
+Route::post('/contact', [ContactMessageController::class, 'store'])->name('contact.store');
