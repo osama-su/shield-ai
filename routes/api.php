@@ -38,9 +38,11 @@ Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {
 
     Route::post('/upload', [DashboardPageController::class, 'uploadImage'])->name('dashboard.upload');
 
-    Route::get('/contact', [ContactMessageController::class, 'index']);
-    Route::get('/contact/{contactMessage}', [ContactMessageController::class, 'show']);
-    Route::delete('/contact/{contactMessage}', [ContactMessageController::class, 'destroy']);
+        Route::get('/contact', [ContactMessageController::class, 'index']);
+        Route::get('/contact/{contactMessage}', [ContactMessageController::class, 'show']);
+        Route::delete('/contact/{contactMessage}', [ContactMessageController::class, 'destroy']);
+    });
+
     Route::prefix('user')->group(function () {
         Route::post('/upload', [SigntureController::class, 'upload']);
         });
