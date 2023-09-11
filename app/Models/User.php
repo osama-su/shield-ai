@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'signature',
+        'is_admin',
     ];
 
     /**
@@ -50,4 +52,18 @@ class User extends Authenticatable
             set: fn ($value) => Hash::make($value),
         );
     }
+
+    public function signature(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => asset('storage/signatures/' . $value),
+        );
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
+    }
+
+
 }
