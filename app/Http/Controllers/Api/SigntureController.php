@@ -27,12 +27,12 @@ class SigntureController extends Controller
         Storage::put('public/signtures/' . $imageName, $imageData);
 
         $user = Auth::user();
-        $user->signture = $imageName;
+        $user->signature = $imageName;
         $user->save();
 
         return response()->json([
             'data' => [
-                'signture' => $user->signture,
+                'signture' => $user->signature,
             ],
         ]);
     }
