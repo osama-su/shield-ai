@@ -12,11 +12,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        if (!\App\Models\User::where('email', 'admin@app.com')->exists()){
+        if (!\App\Models\User::where('email', 'admin@shieldgroup.ae')->exists()){
              \App\Models\User::factory()->firstOrCreate([
             'name' => 'Admin',
-            'email' => 'admin@app.com',
+            'email' => 'admin@shieldgroup.ae',
             'password' => 'secret',
+            'is_admin' => true,
         ]);
         }
 
