@@ -47,3 +47,4 @@ Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {
 Route::get('{page}', [PageController::class, 'show'])->name('pages.show');
 
 Route::post('/contact', [ContactMessageController::class, 'store'])->name('contact.store');
+Route::post('/newsletter', [NewsletterSubscriberController::class, 'store'])->name('newsletter.store');
