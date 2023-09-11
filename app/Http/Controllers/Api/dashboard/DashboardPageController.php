@@ -79,7 +79,7 @@ class DashboardPageController extends Controller
     public function uploadImage(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         $originalName = $request->file('image')->getClientOriginalName();
