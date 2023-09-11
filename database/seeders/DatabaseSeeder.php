@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         if (!\App\Models\User::where('email', 'admin@shieldgroup.ae')->exists()){
-             \App\Models\User::factory()->firstOrCreate([
+             \App\Models\User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@shieldgroup.ae',
             'password' => 'secret',
@@ -21,8 +21,8 @@ class DatabaseSeeder extends Seeder
         ]);
         }
 
-         $this->call([
-             PageSeeder::class,
-         ]);
+//         $this->call([
+//             PageSeeder::class,
+//         ]);
     }
 }
