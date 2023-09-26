@@ -329,7 +329,7 @@ function resetClientData() {
                         <small class="p-error" id="text-error">{{ errors.notes || '&nbsp;' }}</small>
                     </div>
 
-                    <div v-if="$page.props.auth.user.is_Admin" class="flex flex-col w-full max-w-lg mx-1">
+                    <div v-if="$page.props.auth.user.is_admin" class="flex flex-col w-full max-w-lg mx-1">
                         <label for="value" class="!text-[15px] !text-[#104772]">Assign To User</label>
                         <Dropdown
                             v-model="message.assigned_user_id"
