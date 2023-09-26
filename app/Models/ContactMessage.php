@@ -16,5 +16,13 @@ class ContactMessage extends Model
         'gender',
         'country',
         'service',
+        'notes',
+        'assigned_user_id',
     ];
+
+
+    public function assignedUser()
+    {
+        return $this->belongsTo(User::class, 'assigned_user_id');
+    }
 }

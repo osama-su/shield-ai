@@ -81,4 +81,9 @@ class User extends Authenticatable
     {
         return $this->is_admin;
     }
+
+    public function contactMessages()
+    {
+        return $this->hasMany(ContactMessage::class, 'assigned_user_id');
+    }
 }
