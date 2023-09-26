@@ -28,6 +28,8 @@ class StoreContactMessageRequest extends FormRequest
             'gender' => ['required', 'string'],
             'country' => ['required', 'string'],
             'service' => ['required', 'string'],
+            'notes' => ['sometimes', 'string'],
+            'assigned_user_id' => ['sometimes', 'integer', 'exists:users,id'],
         ];
     }
 }
