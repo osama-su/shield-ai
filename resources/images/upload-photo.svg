@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="98" height="98" viewBox="0 0 98 98">
+  <defs>
+    <filter id="Ellipse_12" x="0" y="0" width="98" height="98" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_19" data-name="Group 19" transform="translate(-626 -121)">
+    <g transform="matrix(1, 0, 0, 1, 626, 121)" filter="url(#Ellipse_12)">
+      <circle id="Ellipse_12-2" data-name="Ellipse 12" cx="40" cy="40" r="40" transform="translate(9 6)" fill="#fff"/>
+    </g>
+    <g id="Icon_feather-upload-cloud" data-name="Icon feather-upload-cloud" transform="translate(666.171 197.961)">
+      <path id="Path_48" data-name="Path 48" d="M12.478,12.906,9.572,10,6.667,12.906" transform="translate(-0.749 -0.962)" fill="none" stroke="#104772" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Path_49" data-name="Path 49" d="M10,10v6.538" transform="translate(-1.177 -0.962)" fill="none" stroke="#104772" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Path_50" data-name="Path 50" d="M14.918,13.68a3.632,3.632,0,0,0-1.736-6.821h-.915a5.811,5.811,0,1,0-9.981,5.3" transform="translate(0)" fill="none" stroke="#104772" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Path_51" data-name="Path 51" d="M12.478,12.906,9.572,10,6.667,12.906" transform="translate(-0.749 -0.962)" fill="none" stroke="#104772" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    </g>
+    <text id="Upolad_Photo" data-name="Upolad
+Photo" transform="translate(675 163)" fill="#c0c6ca" font-size="12" font-family="Poppins-Regular, Poppins"><tspan x="-21" y="0">Upolad</tspan><tspan x="-17" y="18">Photo</tspan></text>
+  </g>
+</svg>
