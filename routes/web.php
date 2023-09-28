@@ -34,4 +34,6 @@ Route::middleware([
     })->name('dashboard');
 
     Route::resource('contact-messages', \App\Http\Controllers\ContactMessageController::class);
+
+    Route::resource('{contactMessage}/invoices', \App\Http\Controllers\InvoiceController::class);
 });

@@ -27,6 +27,14 @@ const items = ref([
     {
         name: "Delete",
         code: 'delete'
+    },
+    {
+        name: 'Invoices',
+        code: 'invoices'
+    },
+    {
+        name: 'Send Email',
+        code: 'send-email'
     }
 ])
 const statusOptions = ref([
@@ -61,6 +69,15 @@ const errors = ref({
 
 });
 
+const email = ref({
+    name: null,
+    email: null,
+    subject: null,
+    message: null,
+    _method: "POST"
+
+});
+
 const currentPage = ref(parseInt(props.data.current_page) - 1);
 
 function changePage(page, path) {
@@ -73,9 +90,17 @@ const dialogMode = ref("create")
 const deleteVisible = ref(false)
 const deleteClientData = ref(null)
 
+const sendEmailVisible = ref(false)
+const sendEmailData = ref(null)
+
 function closeDeleteModal() {
     deleteClientData.value = null
     deleteVisible.value = false;
+}
+
+function closeSendEmailModal() {
+    sendEmailData.value = null
+    sendEmailVisible.value = false;
 }
 
 function deleteClient() {
@@ -84,6 +109,18 @@ function deleteClient() {
         deleteVisible.value = false
         router.reload()
     }).catch((err) => {
+    })
+}
+
+function sendEmail() {
+    axios.post('contact-messages/' + email.value.id + '/send-email', email.value).then((res) => {
+        sendEmailData.value = null
+        sendEmailVisible.value = false
+        router.reload()
+    }).catch((err) => {
+        for (const errKey in err.response.data.errors) {
+            errors.value[errKey] = err.response.data.errors[errKey].join('\n');
+        }
     })
 }
 
@@ -109,6 +146,13 @@ function optionChange(e, id) {
             showData.value = res.data.data
             showVisible.value = true;
         });
+    } else if (e.value === 'send-email') {
+        axios.get(`/contact-messages/${id}`).then((res) => {
+            email.value = res.data.data
+            sendEmailVisible.value = true;
+        });
+    } else if (e.value === 'invoices') {
+        router.get(`${id}/invoices`)
     }
 }
 
@@ -318,14 +362,14 @@ function resetClientData() {
                         <small class="p-error" id="text-error">{{ errors.country || '&nbsp;' }}</small>
                     </div>
                 </div>
-<!--                assign to user and notes -->
+                <!--                assign to user and notes -->
                 <div class="flex flex-row flex-nowrap justify-around gap-10">
                     <div class="flex flex-col w-full max-w-lg mx-1">
                         <label for="value" class="!text-[15px] !text-[#104772]">Notes</label>
                         <Textarea id="value" v-model="message.notes" type="text"
-                                   class="w-full !text-[12px] !h-[50%] !bg-neutral-100 !text-neutral-600"
-                                   placeholder="Notes" :class="{ 'p-invalid': errors.notes }"
-                                   aria-describedby="text-error"/>
+                                  class="w-full !text-[12px] !h-[50%] !bg-neutral-100 !text-neutral-600"
+                                  placeholder="Notes" :class="{ 'p-invalid': errors.notes }"
+                                  aria-describedby="text-error"/>
                         <small class="p-error" id="text-error">{{ errors.notes || '&nbsp;' }}</small>
                     </div>
 
@@ -435,6 +479,72 @@ function resetClientData() {
                             label='Done' @click="showVisible = false"/>
                 </div>
             </template>
+        </Dialog>
+
+        <Dialog v-model:visible="sendEmailVisible"
+                modal :closable="false"
+                :style="{ width: '50vw' }"
+                :pt="{
+                    header: {class:'!pb-0'}
+                }">
+            <template #header class="!p-0">
+                <div class="flex flex-row justify-center w-full">
+                    <p class="text-[18px] text-[#104772] text-center font-bold leading-6">
+                        Send Email
+                    </p>
+                </div>
+            </template>
+            <form class="flex flex-col gap-2" enctype="multipart/form-data">
+                <div class="flex flex-row flex-nowrap justify-around gap-10">
+                    <div class="flex flex-col w-full max-w-lg mx-1">
+                        <label for="value" class="!text-[15px] !text-[#104772]">Name</label>
+                        <InputText id="value" v-model="email.name" type="text"
+                                   class="w-full !text-[12px] !h-[50%] !bg-neutral-100 !text-neutral-600"
+                                   placeholder="Company Name" :class="{ 'p-invalid': errors.name }"
+                                   aria-describedby="text-error"/>
+                        <small class="p-error" id="text-error">{{ errors.name || '&nbsp;' }}</small>
+                    </div>
+
+                    <div class="flex flex-col w-full max-w-lg mx-1">
+                        <label for="value" class="!text-[15px] !text-[#104772]">E-mail</label>
+                        <InputText id="value" v-model="email.email" type="text"
+                                   class="w-full !text-[12px] !h-[50%] !bg-neutral-100 !text-neutral-600"
+                                   placeholder="E-mail" :class="{ 'p-invalid': errors['email'] }"
+                                   aria-describedby="text-error"/>
+                        <small class="p-error" id="text-error">{{ errors["email"] || '&nbsp;' }}</small>
+                    </div>
+
+                </div>
+
+                <!--                assign to user and notes -->
+                <div class="flex flex-row flex-nowrap justify-around gap-10">
+                    <div class="flex flex-col w-full max-w-lg mx-1">
+                        <label for="value" class="!text-[15px] !text-[#104772]">Subject</label>
+                        <InputText id="value" v-model="email.subject" type="text"
+                                   class="w-full !text-[12px] !h-[50%] !bg-neutral-100 !text-neutral-600"
+                                   placeholder="Subject" :class="{ 'p-invalid': errors['subject'] }"
+                                   aria-describedby="text-error"/>
+                        <small class="p-error" id="text-error">{{ errors["subject"] || '&nbsp;' }}</small>
+                    </div>
+                    <div class="flex flex-col w-full max-w-lg mx-1">
+                        <label for="value" class="!text-[15px] !text-[#104772]">Message</label>
+                        <Textarea id="value" v-model="email.message" type="text"
+                                  class="w-full !text-[12px] !h-[50%] !bg-neutral-100 !text-neutral-600"
+                                  placeholder="Message Body" :class="{ 'p-invalid': errors.message }"
+                                  aria-describedby="text-error"/>
+                        <small class="p-error" id="text-error">{{ errors.message || '&nbsp;' }}</small>
+                    </div>
+
+
+                </div>
+
+                <div class="flex flex-row justify-center flex-nowrap w-full gap-10">
+                    <Button label="Cancel" class="!w-[20%] !bg-[#F0C0C0] !text-[#D90303] !border-none"
+                            @click="closeSendEmailModal"/>
+                    <Button type="button" class="!w-[20%] !bg-gradient-to-r !from-[#082439] !to-[#104772] !border-none"
+                            :label='"Send"' @click="sendEmail()"/>
+                </div>
+            </form>
         </Dialog>
 
     </AppLayout>

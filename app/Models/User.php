@@ -86,4 +86,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ContactMessage::class, 'assigned_user_id');
     }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class, 'assigned_user_id');
+    }
 }

@@ -25,4 +25,9 @@ class ContactMessage extends Model
     {
         return $this->belongsTo(User::class, 'assigned_user_id');
     }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }
