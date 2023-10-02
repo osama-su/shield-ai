@@ -10,8 +10,10 @@ import TextInput from '@/Components/TextInput.vue';
 
 defineProps({
     canResetPassword: Boolean,
+    canRegister: Boolean,
     status: String,
 });
+
 
 const form = useForm({
     email: '',
@@ -27,6 +29,7 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
+
 </script>
 
 <template>
@@ -76,7 +79,8 @@ const submit = () => {
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-between mt-4">
+                <Link :href="route('register')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">Register</Link>
                 <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
                     Forgot your password?
                 </Link>
