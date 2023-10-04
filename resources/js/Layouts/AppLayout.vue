@@ -140,6 +140,7 @@ defineProps({
 const navigation = [
     { name: 'Dashboard', href: route('dashboard'),selectedIcon:dashboardActive, icon: dashboardIcon, current: true },
     { name: 'contact-management', href: route('contact-messages.index'),selectedIcon:clientActiveIcon, icon: clientIcon, current: false },
+    { name: 'Users', href: route('users.index'),selectedIcon:clientActiveIcon, icon: clientIcon, current: false },
             ]
 const teams = [
     { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
