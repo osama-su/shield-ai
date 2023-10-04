@@ -208,7 +208,7 @@ function resetClientData() {
                 <div class="card p-9">
                     <div v-if="$page.props.auth.user.is_admin"
                          class="flex flex-row justify-end mb-5">
-                        <Button icon="pi pi-plus-circle" severity="secondary" raised label="Add New Message"
+                        <Button icon="pi pi-plus-circle" severity="secondary" raised label="Add New User"
                                 class="btn btn-active btn-neutral normal-case  !bg-gradient-to-r !from-[#082439] !to-[#104772]"
                                 @click="visible = true"/>
                     </div>

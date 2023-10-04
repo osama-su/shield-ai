@@ -10,6 +10,7 @@ import Paginator from "primevue/paginator";
 import Dropdown from "primevue/dropdown";
 import InputText from "primevue/inputtext";
 import Dialog from "primevue/dialog";
+import Textarea from "primevue/textarea";
 
 const props = defineProps({data: Object, users: Array});
 
@@ -365,9 +366,9 @@ function resetClientData() {
                 <!--                assign to user and notes -->
                 <div class="flex flex-row flex-nowrap justify-around gap-10">
                     <div class="flex flex-col w-full max-w-lg mx-1">
-                        <label for="value" class="!text-[15px] !text-[#104772]">Notes</label>
-                        <Textarea id="value" v-model="message.notes" type="text"
-                                  class="w-full !text-[12px] !h-[50%] !bg-neutral-100 !text-neutral-600"
+                        <label for="message.notes" class="!text-[15px] !text-[#104772]">Notes</label>
+                        <Textarea id="message.notes" v-model="message.notes" type="text"
+                                  class="w-full !text-[12px] !h-[50%] !bg-neutral-100 !text-neutral-600 !resize-none"
                                   placeholder="Notes" :class="{ 'p-invalid': errors.notes }"
                                   aria-describedby="text-error"/>
                         <small class="p-error" id="text-error">{{ errors.notes || '&nbsp;' }}</small>
