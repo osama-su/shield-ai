@@ -20,6 +20,8 @@
         "@headlessui/vue": "^1.7.15",
         "@heroicons/vue": "^2.0.18",
         "primeicons": "^6.0.1",
-        "primevue": "^3.32.0"
+        "primevue": "^3.32.0",
+        "apexcharts": "^3.42.0",
+        "vue3-apexcharts": "^1.4.4"
     }
 }
