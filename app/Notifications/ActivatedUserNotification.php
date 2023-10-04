@@ -35,8 +35,8 @@ class ActivatedUserNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
+                    ->greeting('Hello!')
+                    ->line('Your account has been approved by the admin. You can now login to the system.')
                     ->line('Thank you for using our application!');
     }
 
