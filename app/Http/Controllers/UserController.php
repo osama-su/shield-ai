@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
+use Laravel\Fortify\Rules\Password;
 
 class UserController extends Controller
 {
@@ -15,7 +17,7 @@ class UserController extends Controller
     {
         if (auth()->user()->is_admin) {
             $users = User::paginate();
-        }else{
+        } else {
             $users = [];
         }
 
@@ -29,7 +31,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::create($request->validated());
+        $input = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:users',
+            'password' => ['required', 'string', new Password, 'confirmed'],
+            'status' => 'required|string|in:active,pending',
+        ]);
+        $user = User::create([
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'password' => Hash::make($input['password']),
+            'is_admin' => $input['is_admin'] ?? false,
+            'status' => $input['status'],
+        ]);
 
         return response()->json([
             'message' => 'User stored successfully',
@@ -57,7 +71,6 @@ class UserController extends Controller
             'name' => 'required|string',
             'status' => 'required|string|in:active,pending',
         ]);
-
 
 
         $user->update($data);

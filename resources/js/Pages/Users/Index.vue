@@ -42,8 +42,11 @@ const statusOptions = ref([
 const user = ref({
     id: 0,
     name: null,
-    is_admin: null,
+    is_admin: 0,
     status: null,
+    email: null,
+    password: null,
+    password_confirmation: null,
     _method: "POST"
 });
 const errors = ref({
@@ -91,7 +94,7 @@ function closeSendEmailModal() {
 }
 
 function deleteClient() {
-    axios.delete('contact-messages/' + deleteClientData.value.id).then((res) => {
+    axios.delete('users/' + deleteClientData.value.id).then((res) => {
         deleteClientData.value = null
         deleteVisible.value = false
         router.reload()
@@ -360,9 +363,25 @@ function resetClientData() {
                     </div>
 
                 </div>
+                <div class="flex flex-row flex-nowrap justify-around gap-10">
 
-
-
+                    <div class="flex flex-col w-full max-w-lg mx-1">
+                        <label for="value" class="!text-[15px] !text-[#104772]">Password</label>
+                        <InputText id="value" v-model="user.password" type="password"
+                                   class="w-full !text-[12px] !h-[50%] !bg-neutral-100 !text-neutral-600"
+                                   placeholder="Password" :class="{ 'p-invalid': errors.password }"
+                                   aria-describedby="text-error"/>
+                        <small class="p-error" id="text-error">{{ errors["password"] || '&nbsp;' }}</small>
+                    </div>
+                    <div class="flex flex-col w-full max-w-lg mx-1">
+                        <label for="value" class="!text-[15px] !text-[#104772]">Confirm Password</label>
+                        <InputText id="value" v-model="user.password_confirmation" type="password"
+                                   class="w-full !text-[12px] !h-[50%] !bg-neutral-100 !text-neutral-600"
+                                   placeholder="Confirm Password" :class="{ 'p-invalid': errors.password_confirmation }"
+                                   aria-describedby="text-error"/>
+                        <small class="p-error" id="text-error">{{ errors["password_confirmation"] || '&nbsp;' }}</small>
+                    </div>
+                </div>
 
 
 
