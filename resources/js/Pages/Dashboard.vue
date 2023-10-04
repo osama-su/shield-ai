@@ -10,6 +10,18 @@ import Column from "primevue/column";
 import DataTable from "primevue/datatable";
 
 
+const props = defineProps({
+    contactMessagesThisMonth: {
+        type: Number,
+        required: true,
+    },
+    allContactMessages: {
+        type: Number,
+        required: true,
+    },
+    contactMessagesPerMonth: Array,
+});
+
 const chartData = ref({
     series: [{
         name: 'Sales',
@@ -314,14 +326,15 @@ const chartWalletLineData = ref({
         }
     },
 });
+console.log(props.contactMessagesPerMonth)
 const chartOrderData = ref({
     series: [{
-        name: 'Sales',
-        data: [2.3, 3.1, 2.0, 3.1, 4.0, 3.6, 3.2,3.2,3.2,4.0, 3.6, 3.2,]
+        name: 'Message',
+        data: props.contactMessagesPerMonth
     }],
     chartOptions: {
         title:{
-            text: 'Total Orders Per years',
+            text: 'Total contacts Per years',
             style: {
                 fontSize:  '15px',
                 fontWeight:  'normal',
@@ -498,23 +511,18 @@ const data = ref([
                     <div class="bg-white overflow-hidden sm:rounded-lg">
                         <div class="bg-white light:bg-gray-800 overflow-hidden px-2 flex flex-col justify-between h-full">
                             <div>
-                                <p class="text-[#104772] text-[18px] my-2 font-bold">2.6 k</p>
-                                <p class="text-[#C0C6CA] text-[15px]">New Drivers This Month</p>
+                                <p class="text-[#104772] text-[18px] my-2 font-bold">{{ props.contactMessagesThisMonth }}</p>
+                                <p class="text-[#C0C6CA] text-[15px]">New Contact Messages This Month</p>
                             </div>
-                            <AvatarGroup class="mb-5">
-                                <Avatar :image="avatarPlaceholderImage" size="normal" shape="circle" />
-                                <Avatar :image="avatarPlaceholderImage" size="normal" shape="circle" />
-                                <Avatar :image="avatarPlaceholderImage" size="normal" shape="circle" />
-                                <Avatar :image="avatarPlaceholderImage" size="normal" shape="circle" />
-                                <Avatar :image="avatarPlaceholderImage" size="normal" shape="circle" />
-                                <Avatar :image="avatarPlaceholderImage" size="normal" shape="circle" />
-                                <Avatar :image="avatarPlaceholderImage" size="normal" shape="circle" />
-                                <Avatar :image="avatarPlaceholderImage" size="normal" shape="circle" />
-                                <Avatar :image="avatarPlaceholderImage" size="normal" shape="circle" />
-                                <Avatar :image="avatarPlaceholderImage" size="normal" shape="circle" />
-                                <Avatar :image="avatarPlaceholderImage" size="normal" shape="circle" />
-                                <Avatar label="+2" shape="circle" size="normal" style="background-color: '#9c27b0', color: '#ffffff'" />
-                            </AvatarGroup>
+
+                        </div>
+                    </div>
+                    <div class="bg-white overflow-hidden sm:rounded-lg">
+                        <div class="bg-white light:bg-gray-800 overflow-hidden px-2 flex flex-col justify-between h-full">
+                            <div>
+                                <p class="text-[#104772] text-[18px] my-2 font-bold">{{ props.allContactMessages }}</p>
+                                <p class="text-[#C0C6CA] text-[15px]">All Contact Messages</p>
+                            </div>
 
                         </div>
                     </div>
@@ -554,29 +562,29 @@ const data = ref([
                             ></Vue3Apexcharts>
                         </div>
                     </div>
-                    <div class="bg-white overflow-hidden sm:rounded-lg">
-                        <div class="bg-white light:bg-gray-800 overflow-hidden px-2">
-                            <p class="text-[#104772] text-[18px] my-2 font-bold"><sup class="text-[10px]">SAR</sup> 12.63452.00 k
-                                <Badge severity="danger" :pt="{root:{class:'!bg-[#edb2b3] ml-1'}}">
-                                    <template #default>
-                                        <p class="text-[10px] text-[#e04d48] ">8 % <i class="pi pi-arrow-down !text-[10px]"></i></p>
-                                    </template>
-                                </Badge>
-                            </p>
-                            <Vue3Apexcharts
-                                type="area"
-                                height="150"
-                                width="100%"
-                                :options="chartWalletLineData.chartOptions"
-                                :series="chartWalletLineData.series"
-                            ></Vue3Apexcharts>
-                        </div>
-                    </div>
+<!--                    <div class="bg-white overflow-hidden sm:rounded-lg">-->
+<!--                        <div class="bg-white light:bg-gray-800 overflow-hidden px-2">-->
+<!--                            <p class="text-[#104772] text-[18px] my-2 font-bold"><sup class="text-[10px]">SAR</sup> 12.63452.00 k-->
+<!--                                <Badge severity="danger" :pt="{root:{class:'!bg-[#edb2b3] ml-1'}}">-->
+<!--                                    <template #default>-->
+<!--                                        <p class="text-[10px] text-[#e04d48] ">8 % <i class="pi pi-arrow-down !text-[10px]"></i></p>-->
+<!--                                    </template>-->
+<!--                                </Badge>-->
+<!--                            </p>-->
+<!--                            <Vue3Apexcharts-->
+<!--                                type="area"-->
+<!--                                height="150"-->
+<!--                                width="100%"-->
+<!--                                :options="chartWalletLineData.chartOptions"-->
+<!--                                :series="chartWalletLineData.series"-->
+<!--                            ></Vue3Apexcharts>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
                 <div class="grid grid-cols-3 gap-6 my-5">
                     <div class="bg-white overflow-hidden col-span-2 sm:rounded-lg">
                         <div class="bg-white light:bg-gray-800 overflow-hidden px-2">
-                            <p class="text-[#104772] text-[18px] pl-3 my-2 font-bold"> 7.4 k  Orders
+                            <p class="text-[#104772] text-[18px] pl-3 my-2 font-bold"> {{ props.allContactMessages }}  Contact Messages
                                 <Badge severity="success" :pt="{root:{class:'!bg-[#C7EFB2] ml-1'}}">
                                     <template #default>
                                         <p class="text-[10px] text-[#85D83A] ">12 % <i class="pi pi-arrow-up !text-[10px]"></i></p>
