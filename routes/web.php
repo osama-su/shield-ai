@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -36,7 +39,8 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::resource('contact-messages', \App\Http\Controllers\ContactMessageController::class);
+    Route::resource('contact-messages', ContactMessageController::class);
 
-    Route::resource('{contactMessage}/invoices', \App\Http\Controllers\InvoiceController::class);
+    Route::resource('{contactMessage}/invoices', InvoiceController::class);
+    Route::resource('users', UserController::class);
 });
