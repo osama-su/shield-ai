@@ -30,10 +30,15 @@ Route::get('/', function () {
 //        ]);
 });
 
+Route::get('/need-activation', function () {
+    return Inertia::render('NeedActivation');
+})->name('need-activation');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'active',
 ])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->name('dashboard');
 

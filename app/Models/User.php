@@ -64,12 +64,12 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function password(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => Hash::make($value),
-        );
-    }
+//    public function password(): Attribute
+//    {
+//        return Attribute::make(
+//            set: fn ($value) => Hash::make($value),
+//        );
+//    }
 
     public function signature(): Attribute
     {

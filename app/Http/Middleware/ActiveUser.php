@@ -22,10 +22,10 @@ class ActiveUser
     {
         if (! $request->user() ||
             ($request->user()->status === 'pending')) {
-//            session()->flush();
-            return $request->expectsJson()
-                ? abort(403, 'You are not an active user.')
-                : Redirect::guest(URL::route($redirectToRoute ?: 'login'))->with('error', 'You are not an active user.');
+            if ($request->expectsJson()) {
+                return abort(403, 'You are not an active user.');
+            }
+            return Redirect::route($redirectToRoute ?: 'need-activation');
         }
 
         return $next($request);
