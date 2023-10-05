@@ -20,6 +20,15 @@ const props = defineProps({
         required: true,
     },
     contactMessagesPerMonth: Array,
+    salesThisMonth: {
+        type: Number,
+        required: true,
+    },
+    allSales: {
+        type: Number,
+        required: true,
+    },
+    salesPerMonth: Array,
 });
 
 const chartData = ref({
@@ -326,7 +335,7 @@ const chartWalletLineData = ref({
         }
     },
 });
-console.log(props.contactMessagesPerMonth)
+console.log(props.salesPerMonth)
 const chartOrderData = ref({
     series: [{
         name: 'Message',
@@ -335,6 +344,112 @@ const chartOrderData = ref({
     chartOptions: {
         title:{
             text: 'Total contacts Per years',
+            style: {
+                fontSize:  '15px',
+                fontWeight:  'normal',
+                color:  '#C0C6CA'
+            },
+        },
+        legend: {
+            show: false
+        },
+        fill: {
+            colors: ['#082439','#104772' ],
+            type: 'gradient',
+            gradient: {
+                type: "vertical",
+                colorStops: [
+                    {
+                        offset: 0,
+                        color: "#104772",
+                        opacity: 1
+                    },
+                    {
+                        offset: 90,
+                        color: "#082439",
+                        opacity: 1
+                    },
+                ]
+            }
+        },
+        chart: {
+            type: 'bar',
+            toolbar:{
+                show: false,
+            },
+        },
+        plotOptions: {
+            bar: {
+                barHeight: '100%',
+                borderRadius: 5,
+                borderRadiusOnAllStackedSeries: true,
+                startingShape: "rounded",
+                endingShape: "rounded",
+            }
+        },
+        dataLabels: {
+            enabled: false,
+        },
+
+        xaxis: {
+            categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct","Nov", "Dec"],
+            tooltip: {
+                enabled: false,
+            },
+            labels: {
+                show: true,
+                style: {
+                    colors: ['#104772','#104772','#104772','#104772','#104772','#104772','#104772','#104772','#104772','#104772','#104772','#104772'],
+                    fontSize: '12px',
+                },
+            },
+            axisBorder: {
+                show: false,
+            },
+            axisTicks: {
+                show: false,
+            },
+            crosshairs: {
+                show: false,
+            }
+        },
+        yaxis: {
+            show:false,
+            axisBorder: {
+                show: false
+            },
+            axisTicks: {
+                show: false,
+            },
+            labels: {
+                show: false,
+            },
+            tooltip: {
+                enabled: false,
+            },
+        },
+        grid: {
+            xaxis: {
+                lines: {
+                    show: false
+                }
+            },
+            yaxis: {
+                lines: {
+                    show: false
+                }
+            }
+        }
+    },
+});
+const chartOrderDataSales = ref({
+    series: [{
+        name: 'sales',
+        data: props.salesPerMonth
+    }],
+    chartOptions: {
+        title:{
+            text: 'Total sales Per years',
             style: {
                 fontSize:  '15px',
                 fontWeight:  'normal',
@@ -527,69 +642,34 @@ const data = ref([
                         </div>
                     </div>
                     <div class="bg-white overflow-hidden sm:rounded-lg">
-                        <div class="bg-white light:bg-gray-800 overflow-hidden px-2">
-                            <p class="text-[#104772] text-[18px] my-2 font-bold"><sup class="text-[10px]">SAR</sup> 22.5 k
-                                <Badge severity="success" :pt="{root:{class:'!bg-[#C7EFB2] ml-1'}}">
-                                    <template #default>
-                                        <p class="text-[10px] text-[#85D83A] ">12 % <i class="pi pi-arrow-up !text-[10px]"></i></p>
-                                    </template>
-                                </Badge>
-                            </p>
-                            <Vue3Apexcharts
-                                type="bar"
-                                height="150"
-                                width="100%"
-                                :options="chartData.chartOptions"
-                                :series="chartData.series"
-                            ></Vue3Apexcharts>
+                        <div class="bg-white light:bg-gray-800 overflow-hidden px-2 flex flex-col justify-between h-full">
+                            <div>
+                                <p class="text-[#104772] text-[18px] my-2 font-bold">{{ props.salesThisMonth }}</p>
+                                <p class="text-[#C0C6CA] text-[15px]">Sales This Month</p>
+                            </div>
+
                         </div>
                     </div>
                     <div class="bg-white overflow-hidden sm:rounded-lg">
-                        <div class="bg-white light:bg-gray-800 overflow-hidden px-2">
-                            <p class="text-[#104772] text-[18px] my-2 font-bold"><sup class="text-[10px]">SAR</sup> 22343.22.00 k
-                                <Badge severity="success" :pt="{root:{class:'!bg-[#C7EFB2] ml-1'}}">
-                                    <template #default>
-                                        <p class="text-[10px] text-[#85D83A] ">12 % <i class="pi pi-arrow-up !text-[10px]"></i></p>
-                                    </template>
-                                </Badge>
-                            </p>
-                            <Vue3Apexcharts
-                                type="area"
-                                height="150"
-                                width="100%"
-                                :options="chartLineData.chartOptions"
-                                :series="chartLineData.series"
-                            ></Vue3Apexcharts>
+                        <div class="bg-white light:bg-gray-800 overflow-hidden px-2 flex flex-col justify-between h-full">
+                            <div>
+                                <p class="text-[#104772] text-[18px] my-2 font-bold">{{ props.allSales }}</p>
+                                <p class="text-[#C0C6CA] text-[15px]">All Sales</p>
+                            </div>
+
                         </div>
                     </div>
-<!--                    <div class="bg-white overflow-hidden sm:rounded-lg">-->
-<!--                        <div class="bg-white light:bg-gray-800 overflow-hidden px-2">-->
-<!--                            <p class="text-[#104772] text-[18px] my-2 font-bold"><sup class="text-[10px]">SAR</sup> 12.63452.00 k-->
-<!--                                <Badge severity="danger" :pt="{root:{class:'!bg-[#edb2b3] ml-1'}}">-->
-<!--                                    <template #default>-->
-<!--                                        <p class="text-[10px] text-[#e04d48] ">8 % <i class="pi pi-arrow-down !text-[10px]"></i></p>-->
-<!--                                    </template>-->
-<!--                                </Badge>-->
-<!--                            </p>-->
-<!--                            <Vue3Apexcharts-->
-<!--                                type="area"-->
-<!--                                height="150"-->
-<!--                                width="100%"-->
-<!--                                :options="chartWalletLineData.chartOptions"-->
-<!--                                :series="chartWalletLineData.series"-->
-<!--                            ></Vue3Apexcharts>-->
-<!--                        </div>-->
-<!--                    </div>-->
+
                 </div>
                 <div class="grid grid-cols-3 gap-6 my-5">
                     <div class="bg-white overflow-hidden col-span-2 sm:rounded-lg">
                         <div class="bg-white light:bg-gray-800 overflow-hidden px-2">
                             <p class="text-[#104772] text-[18px] pl-3 my-2 font-bold"> {{ props.allContactMessages }}  Contact Messages
-                                <Badge severity="success" :pt="{root:{class:'!bg-[#C7EFB2] ml-1'}}">
-                                    <template #default>
-                                        <p class="text-[10px] text-[#85D83A] ">12 % <i class="pi pi-arrow-up !text-[10px]"></i></p>
-                                    </template>
-                                </Badge>
+<!--                                <Badge severity="success" :pt="{root:{class:'!bg-[#C7EFB2] ml-1'}}">-->
+<!--                                    <template #default>-->
+<!--                                        <p class="text-[10px] text-[#85D83A] ">12 % <i class="pi pi-arrow-up !text-[10px]"></i></p>-->
+<!--                                    </template>-->
+<!--                                </Badge>-->
                             </p>
                             <Vue3Apexcharts
                                 type="bar"
@@ -600,61 +680,31 @@ const data = ref([
                             ></Vue3Apexcharts>
                         </div>
                     </div>
-                    <div class="bg-white overflow-hidden col-span-1 sm:rounded-lg">
+
+                </div>
+                <div class="grid grid-cols-3 gap-6 my-5">
+                    <div class="bg-white overflow-hidden col-span-2 sm:rounded-lg">
                         <div class="bg-white light:bg-gray-800 overflow-hidden px-2">
-                            <p class="text-[#104772] text-[18px] pl-4 mt-2 font-bold flex flex-row items-center"> <span>Profit</span>
-                                <Badge severity="success" :pt="{root:{class:'!bg-[#C7EFB2] ml-1'}}">
-                                    <template #default>
-                                        <p class="text-[10px] text-[#85D83A] ">12 % <i class="pi pi-arrow-up !text-[10px]"></i></p>
-                                    </template>
-                                </Badge>
+                            <p class="text-[#104772] text-[18px] pl-3 my-2 font-bold"> {{ props.allSales }}  USD
+<!--                                <Badge severity="success" :pt="{root:{class:'!bg-[#C7EFB2] ml-1'}}">-->
+<!--                                    <template #default>-->
+<!--                                        <p class="text-[10px] text-[#85D83A] ">12 % <i class="pi pi-arrow-up !text-[10px]"></i></p>-->
+<!--                                    </template>-->
+<!--                                </Badge>-->
                             </p>
-                            <div class="grid grid-cols-3">
-                                <div class="col-span-1">
-                                    <div class="flex flex-col justify-evenly pl-4 h-full ">
-                                        <div class="">
-                                            <p class="text-[#5A6F7E] text-[12px]"><Badge :pt="{root:{class:'!bg-[#104772] mr-1'}}"></Badge>Expected Profit</p>
-                                            <p class="text-[#104772] text-[12px]">222.322.00 SAR</p>
-                                        </div>
-                                        <div class="">
-                                            <p class="text-[#5A6F7E] text-[12px]"><Badge :pt="{root:{class:'!bg-[#C1C6C9] mr-1'}}"></Badge>Retained Profit</p>
-                                            <p class="text-[#104772] text-[12px]">222.322.00 SAR</p>
-                                        </div>
-                                        <div class="">
-                                            <p class="text-[#5A6F7E] text-[12px]"><Badge :pt="{root:{class:'!bg-[#E7EBF0] mr-1'}}"></Badge>Withdrawable Profits</p>
-                                            <p class="text-[#104772] text-[12px]">222.322.00 SAR</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-span-2 ">
-                                    <Vue3Apexcharts
-                                        type="donut"
-                                        height="250"
-                                        width="100%"
-                                        :options="chartDonutData.chartOptions"
-                                        :series="chartDonutData.series"
-                                    ></Vue3Apexcharts>
-                                </div>
-                            </div>
+                            <Vue3Apexcharts
+                                type="bar"
+                                height="250"
+                                width="100%"
+                                :options="chartOrderDataSales.chartOptions"
+                                :series="chartOrderDataSales.series"
+                            ></Vue3Apexcharts>
                         </div>
                     </div>
+
                 </div>
                 <div class="grid grid-cols-3 gap-6">
-                    <div class="bg-white overflow-hidden col-span-1 sm:rounded-lg">
-                        <p class="text-[#104772] text-[18px] pl-6 mt-2 font-bold "> 30 K</p>
-                        <p class="text-[#C0C6CA] text-[15px] pl-6 mt-2 font-bold ">Drivers</p>
-                        <Vue3Apexcharts
-                            type="pie"
-                            height="250"
-                            width="100%"
-                            :options="chartPieData.chartOptions"
-                            :series="chartPieData.series"
-                        ></Vue3Apexcharts>
-                        <div class="flex flex-row justify-center gap-8 mb-4">
-                            <p class="text-[12px] text-[#104772]"><Badge :pt="{root:{class:'!bg-[#104772] mr-2 !rounded-none'}}"></Badge>Drivers Available</p>
-                            <p class="text-[12px] text-[#C0C6CA]"><Badge :pt="{root:{class:'!bg-[#C0C6CA] mr-2 !rounded-none'}}"></Badge>Unavailable</p>
-                        </div>
-                    </div>
+
                     <div class="bg-white overflow-hidden col-span-2 sm:rounded-lg">
                         <p class="text-[#104772] text-[18px] pl-6 mt-2 mb-6 font-bold ">Top Clients</p>
                         <div class="table-content px-6" id="top-clients-table">
