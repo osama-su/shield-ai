@@ -48,6 +48,28 @@ const statusOptions = ref([
         code: 'inactive'
     }
 ]);
+
+const genderOptions = ref([
+    {
+        name: "Male",
+        code: 'male'
+    },
+    {
+        name: 'Female',
+        code: 'female'
+    }
+])
+
+const serviceOptions = ref([
+    {
+        name: "Link your bank account",
+        code: 'link-bank-account'
+    },
+    {
+        name: 'Start buying',
+        code: 'start-buying'
+    }
+])
 const message = ref({
     id: 0,
     name: null,
@@ -244,13 +266,41 @@ function resetClientData() {
                             <Column field="name" header="Name"></Column>
                             <Column field="email" header="Email"></Column>
                             <Column field="phone_number" header="Phone Number"></Column>
-                            <Column field="gender" header="Gender"></Column>
+                            <Column field="" header="Gender">
+                                <template #body="slotProps">
+                                    <p >
+                                        {{
+                                            genderOptions.map((item) => {
+                                                if (item.code == slotProps.data.gender) {
+                                                    return item.name
+                                                }else {
+                                                    return slotProps.data.gender
+                                                }
+                                            })[0]
+                                        }}
+                                    </p>
+                                </template>
+                            </Column>
+
                             <!--                            <Column header="Status">-->
                             <!--                                <template #body="slotProps">-->
                             <!--                                    <p :class="slotProps.data.status === 'active'?'text-[#46CB00]':'text-[#FF0000]'">{{ slotProps.data.status === 'active'?'Active':'InActive' }}</p>-->
                             <!--                                </template>-->
                             <!--                            </Column>-->
                             <Column field="service" header="Service">
+                                <template #body="slotProps">
+                                    <p >
+                                        {{
+                                            serviceOptions.map((item) => {
+                                                if (item.code == slotProps.data.service) {
+                                                    return item.name
+                                                }else{
+                                                    return slotProps.data.service
+                                                }
+                                            })[0]
+                                        }}
+                                    </p>
+                                </template>
                             </Column>
                             <Column field="">
                                 <template #body="slotProps">
@@ -318,10 +368,26 @@ function resetClientData() {
                     </div>
                     <div class="flex flex-col w-full max-w-lg mx-1">
                         <label for="value" class="!text-[15px] !text-[#104772]">Gender</label>
-                        <InputText id="value" v-model="message.gender" type="text"
-                                   class="w-full !text-[12px] !h-[50%] !bg-neutral-100 !text-neutral-600"
-                                   placeholder="Gender" :class="{ 'p-invalid': errors['gender'] }"
-                                   aria-describedby="text-error"/>
+                        <Dropdown
+                            v-model="message.gender"
+                            :options="genderOptions"
+                            option-value="code"
+                            optionLabel="name"
+                            :class="{ 'p-invalid': errors.gender}"
+                            placeholder="Choose Gender"
+                            class="w-full md:w-14rem !text-[12px] !h-[50%] !bg-neutral-100 !text-neutral-600"
+                            :pt="{
+                                input: {class:'!text-[12px]'},
+                                 trigger: ({props, state, context}) =>({
+                                    class: state.focused ?'pi pi-chevron-down !text-[#104772]': 'pi pi-chevron-right !text-[#104772]'
+                                })
+                            }"
+                        >
+                            <template #dropdownicon>
+                                <span></span>
+                            </template>
+                        </Dropdown>
+
                         <small class="p-error" id="text-error">{{ errors["gender"] || '&nbsp;' }}</small>
                     </div>
                 </div>
@@ -348,10 +414,25 @@ function resetClientData() {
                 <div class="flex flex-row flex-nowrap justify-around gap-10">
                     <div class="flex flex-col w-full max-w-lg mx-1">
                         <label for="value" class="!text-[15px] !text-[#104772]">Service</label>
-                        <InputText id="value" v-model="message.service" type="text"
-                                   class="w-full !text-[12px] !h-[50%] !bg-neutral-100 !text-neutral-600"
-                                   placeholder="Service" :class="{ 'p-invalid': errors.service }"
-                                   aria-describedby="text-error"/>
+                        <Dropdown
+                            v-model="message.service"
+                            :options="serviceOptions"
+                            option-value="code"
+                            optionLabel="name"
+                            :class="{ 'p-invalid': errors.service }"
+                            placeholder="Choose Service"
+                            class="w-full md:w-14rem !text-[12px] !h-[50%] !bg-neutral-100 !text-neutral-600"
+                            :pt="{
+                                input: {class:'!text-[12px]'},
+                                 trigger: ({props, state, context}) =>({
+                                    class: state.focused ?'pi pi-chevron-down !text-[#104772]': 'pi pi-chevron-right !text-[#104772]'
+                                })
+                            }"
+                        >
+                            <template #dropdownicon>
+                                <span></span>
+                            </template>
+                        </Dropdown>
                         <small class="p-error" id="text-error">{{ errors.service || '&nbsp;' }}</small>
                     </div>
                     <div class="flex flex-col w-full max-w-lg mx-1">

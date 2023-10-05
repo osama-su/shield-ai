@@ -200,7 +200,7 @@ function resetClientData() {
     <AppLayout title="Clients">
         <template #header>
             <h2 class="font-bold">
-                Contacts
+                Users
             </h2>
         </template>
         <div class="py-2">
@@ -398,11 +398,11 @@ function resetClientData() {
                 :style="{ width: '50vw' }">
             <template #header class="!p-0">
                 <div class="flex flex-row justify-center w-full">
-                    <p class="text-[18px] text-[#104772] text-center font-bold leading-6">Delete Message</p>
+                    <p class="text-[18px] text-[#104772] text-center font-bold leading-6">Delete User</p>
                 </div>
             </template>
             <div class="flex flex-col items-center">
-                <p class="text-[#D90303] text-[15px] font-extrabold font-sans mb-3.5">Are you sure to Delete the Message
+                <p class="text-[#D90303] text-[15px] font-extrabold font-sans mb-3.5">Are you sure to Delete the User
                     ?</p>
                 <p class="text-[#5A6F7E] text-[15px] font-light font-sans">{{ deleteClientData?.name }}</p>
             </div>
