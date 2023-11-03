@@ -31,7 +31,9 @@ class User extends Authenticatable
         'password',
         'signature',
         'is_admin',
-        'status'
+        'status',
+        'phone',
+        'national_id',
     ];
 
     /**

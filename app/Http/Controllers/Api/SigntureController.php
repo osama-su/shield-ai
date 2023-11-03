@@ -14,7 +14,11 @@ class SigntureController extends Controller
     public function upload(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'image' => 'required|string',
+            'image' => 'sometimes|string',
+            'name' => 'sometimes|string',
+            'national_id' => 'sometimes|string',
+            'email' => 'sometimes|string',
+            'phone' => 'sometimes|string',
         ]);
 
         // Extract the base64 encoded image data
@@ -33,6 +37,8 @@ class SigntureController extends Controller
         $user = Auth::user();
         $user->signature = $imageName;
         $user->save();
+
+        $user->update($data);
 
         return response()->json([
             'data' => [
