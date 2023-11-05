@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Signature;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,23 +28,24 @@ class SigntureController extends Controller
         // remove the base64 "header"
         $base64Image = str_replace('data:image/png;base64,', '', $base64Image);
 
-
         // Decode the base64 data and generate a unique filename
         $imageData = base64_decode($base64Image);
         $imageName = uniqid() . '.png';
 
         Storage::put('public/signatures/' . $imageName, $imageData);
 
-        $user = Auth::user();
-        $user->signature = $imageName;
-        $user->save();
 
-        $user->update($data);
+        Signature::create([
+            'signature' => $imageName,
+            'name' => $data['name'],
+            'national_id' => $data['national_id'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+        ]);
 
         return response()->json([
-            'data' => [
-                'signture' => $user->signature,
-            ],
+            'message' => 'Signature uploaded successfully',
+            'signature' => $imageName,
         ]);
     }
 

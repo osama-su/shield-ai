@@ -41,10 +41,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     Route::prefix('user')->group(function () {
-        Route::post('/upload', [SigntureController::class, 'upload']);
         });
 
 });
+Route::post('/upload', [SigntureController::class, 'upload']);
 
 Route::get('{page}', [PageController::class, 'show'])->name('pages.show');
 
