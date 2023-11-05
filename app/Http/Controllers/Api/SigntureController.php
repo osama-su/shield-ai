@@ -22,30 +22,27 @@ class SigntureController extends Controller
             'phone' => 'sometimes|string',
         ]);
 
-        // Extract the base64 encoded image data
-        $base64Image = $data['image'];
+        if (isset($data['image'])) {
+            // Extract the base64 encoded image data
+            $base64Image = $data['image'];
 
-        // remove the base64 "header"
-        $base64Image = str_replace('data:image/png;base64,', '', $base64Image);
+            // remove the base64 "header"
+            $base64Image = str_replace('data:image/png;base64,', '', $base64Image);
 
-        // Decode the base64 data and generate a unique filename
-        $imageData = base64_decode($base64Image);
-        $imageName = uniqid() . '.png';
+            // Decode the base64 data and generate a unique filename
+            $imageData = base64_decode($base64Image);
+            $imageName = uniqid() . '.png';
 
-        Storage::put('public/signatures/' . $imageName, $imageData);
+            Storage::put('public/signatures/' . $imageName, $imageData);
 
+            $data['signature'] = $imageName;
+        }
 
-        Signature::create([
-            'signature' => $imageName,
-            'name' => $data['name'],
-            'national_id' => $data['national_id'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-        ]);
+        $signature = Signature::create($data);
 
         return response()->json([
             'message' => 'Signature uploaded successfully',
-            'signature' => $imageName,
+            'signature' => $signature,
         ]);
     }
 
