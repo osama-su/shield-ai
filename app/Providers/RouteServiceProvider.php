@@ -30,10 +30,12 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->routes(function () {
             Route::middleware('api')
+                ->domain('api.shieldai.ae')
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
 
             Route::middleware('web')
+                ->domain('crm.shieldai.ae')
                 ->group(base_path('routes/web.php'));
         });
     }
