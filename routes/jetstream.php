@@ -14,7 +14,7 @@ use Laravel\Jetstream\Http\Controllers\Inertia\UserProfileController;
 use Laravel\Jetstream\Http\Controllers\TeamInvitationController;
 use Laravel\Jetstream\Jetstream;
 
-Route::group(['domain' => 'crm.shieldai.ae','middleware' => config('jetstream.middleware', ['web'])], function () {
+Route::domain('crm.shieldai.ae')->middleware([config('jetstream.middleware', ['web'])])->group( function () {
     if (Jetstream::hasTermsAndPrivacyPolicyFeature()) {
         Route::get('/terms-of-service', [TermsOfServiceController::class, 'show'])->name('terms.show');
         Route::get('/privacy-policy', [PrivacyPolicyController::class, 'show'])->name('policy.show');
