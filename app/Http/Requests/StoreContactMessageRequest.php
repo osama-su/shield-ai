@@ -27,7 +27,7 @@ class StoreContactMessageRequest extends FormRequest
             'phone_number' => ['required', 'string', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10'],
             'gender' => ['required', 'string'],
             'country' => ['required', 'string'],
-            'service' => ['required', 'string'],
+            'service' => ['sometimes', 'string'],
             'notes' => ['sometimes', 'string'],
             'assigned_user_id' => ['sometimes', 'integer', 'exists:users,id'],
         ];

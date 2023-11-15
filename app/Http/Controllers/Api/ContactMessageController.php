@@ -27,7 +27,12 @@ class ContactMessageController extends Controller
      */
     public function store(StoreContactMessageRequest $request)
     {
-        $contactMessage = ContactMessage::create($request->validated());
+        $data = $request->validated();
+        // check if service not in request
+        if (!isset($data['service'])) {
+            $data['service'] = 'general';
+        }
+        $contactMessage = ContactMessage::create($data);
 
         return response()->json([
             'message' => 'ContactMessage stored successfully',
