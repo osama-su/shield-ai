@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreContactMessageRequest;
+use App\Imports\ContactMessageImport;
 use App\Models\ContactMessage;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ContactMessageController extends Controller
 {
@@ -75,4 +78,25 @@ class ContactMessageController extends Controller
             'message' => 'ContactMessage deleted successfully',
         ]);
     }
+
+    public function import(Request $request)
+    {
+        try {
+            // Validate the request
+            $request->validate([
+                'csv' => 'required|mimes:csv,xls,xlsx,txt|max:10240', // adjust max file size as needed
+            ]);
+
+            // Get the uploaded file
+            $csvFile = $request->file('csv');
+
+            Excel::import(new ContactMessageImport(), $csvFile);
+            // Return a success response
+            return response()->json(['message' => 'CSV file imported successfully'], 200);
+        } catch (\Exception $e) {
+            // Handle exceptions or validation errors
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
 }

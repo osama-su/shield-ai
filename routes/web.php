@@ -43,6 +43,7 @@ Route::middleware([
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->name('dashboard');
 
     Route::resource('contact-messages', ContactMessageController::class);
+    Route::post('contact-messages/import', [ContactMessageController::class, 'import'])->name('contact-messages.import');
 
     Route::resource('{contactMessage}/invoices', InvoiceController::class);
     Route::resource('users', UserController::class);
