@@ -11,6 +11,7 @@ import Dropdown from "primevue/dropdown";
 import InputText from "primevue/inputtext";
 import Dialog from "primevue/dialog";
 import Textarea from "primevue/textarea";
+import FileUpload from 'primevue/fileupload';
 
 const props = defineProps({data: Object, users: Array});
 
@@ -101,6 +102,8 @@ const email = ref({
 
 });
 
+const fileUpload = ref(null);
+
 const currentPage = ref(parseInt(props.data.current_page) - 1);
 
 function changePage(page, path) {
@@ -150,6 +153,7 @@ function sendEmail() {
 const showVisible = ref(false)
 const showData = ref(null)
 const visible = ref(false);
+const importCsvVisible = ref(false);
 
 function optionChange(e, id) {
     if (e.value === 'edit') {
@@ -239,6 +243,21 @@ function resetClientData() {
     }
 }
 
+function importCsv() {
+    console.log(fileUpload.value.files[0]);
+    let formData = new FormData();
+    formData.append('csv', fileUpload.value.files[0]);
+    axios.post('/contact-messages/import', formData).then((res) => {
+        importCsvVisible.value = false;
+        router.reload()
+    }).catch((err) => {
+        console.log(err);
+        for (const errKey in err.response.data.errors) {
+            errors.value[errKey] = err.response.data.errors[errKey].join('\n');
+        }
+    })
+}
+
 </script>
 
 <template>
@@ -256,6 +275,9 @@ function resetClientData() {
                         <Button icon="pi pi-plus-circle" severity="secondary" raised label="Add New Message"
                                 class="btn btn-active btn-neutral normal-case  !bg-gradient-to-r !from-[#082439] !to-[#104772]"
                                 @click="visible = true"/>
+                        <Button icon="pi pi-file-excel" severity="info" raised label="Import CSV"
+                                class="btn btn-active btn-neutral normal-case  !bg-gradient-to-r !from-[#082439] !to-[#104772]"
+                                @click="importCsvVisible = true"/>
                     </div>
                     <div v-if="data.data.length" class="table-content">
                         <DataTable
@@ -291,13 +313,16 @@ function resetClientData() {
                                 <template #body="slotProps">
                                     <p >
                                         {{
-                                            serviceOptions.map((item) => {
-                                                if (item.code == slotProps.data.service) {
-                                                    return item.name
-                                                }else{
-                                                    return slotProps.data.service
-                                                }
-                                            })[0]
+                                            // serviceOptions.map((item) => {
+                                            //     if (item.code == slotProps.data.service) {
+                                            //         return item.name
+                                            //     }else {
+                                            //         return slotProps.data.service
+                                            //     }
+                                            // })[0]
+
+                                            serviceOptions.filter(item => item.code === slotProps.data.service)[0]?.name??slotProps.data.service
+
                                         }}
                                     </p>
                                 </template>
@@ -627,6 +652,25 @@ function resetClientData() {
                             :label='"Send"' @click="sendEmail()"/>
                 </div>
             </form>
+        </Dialog>
+
+        <Dialog v-model:visible="importCsvVisible" modal :closable="false" header="Import CSV">
+            <!-- Your CSV import dialog content goes here -->
+            <!-- You can include file input, processing message, etc. -->
+            <div class="flex flex-col w-full max-w-lg mx-1 ">
+                <FileUpload
+                    ref="fileUpload"
+                    mode="basic"
+                    name="csv"
+                    choose-label="Excel"
+                    class="w-full !border-[#104772] !bg-[#E6EBF0] !border-dashed !text-[#D1D7DB] !text-[12px] !text-left"
+                    :maxFileSize="1000000"  >
+
+                </FileUpload>
+                <small class="p-error" id="text-error">{{ errors["csv"] || '&nbsp;' }}</small>
+            </div>
+            <Button label="Cancel" @click="importCsvVisible = false"/>
+            <Button label="Import" @click="importCsv"/>
         </Dialog>
 
     </AppLayout>
