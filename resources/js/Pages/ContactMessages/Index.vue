@@ -154,6 +154,7 @@ const showVisible = ref(false)
 const showData = ref(null)
 const visible = ref(false);
 const importCsvVisible = ref(false);
+const importCsvLoading = ref(false);
 
 function optionChange(e, id) {
     if (e.value === 'edit') {
@@ -244,10 +245,12 @@ function resetClientData() {
 }
 
 function importCsv() {
+    importCsvLoading.value = true;
     console.log(fileUpload.value.files[0]);
     let formData = new FormData();
     formData.append('csv', fileUpload.value.files[0]);
     axios.post('/contact-messages/import', formData).then((res) => {
+        importCsvLoading.value = false;
         importCsvVisible.value = false;
         router.reload()
     }).catch((err) => {
@@ -255,6 +258,7 @@ function importCsv() {
         for (const errKey in err.response.data.errors) {
             errors.value[errKey] = err.response.data.errors[errKey].join('\n');
         }
+        importCsvLoading.value = false;
     })
 }
 
@@ -670,7 +674,7 @@ function importCsv() {
                 <small class="p-error" id="text-error">{{ errors["csv"] || '&nbsp;' }}</small>
             </div>
             <Button label="Cancel" @click="importCsvVisible = false"/>
-            <Button label="Import" @click="importCsv"/>
+            <Button label="Import" @click="importCsv" :loading="importCsvLoading"/>
         </Dialog>
 
     </AppLayout>
